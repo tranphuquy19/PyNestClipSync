@@ -23,6 +23,7 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
     @SubscribeMessage('msgToServer')
     handleMessage(client: any, data: any): void {
         this.logger.log('msgToServer', data);
+        console.log(data)
         this.server.emit('msgToClient', data);
     }
 
