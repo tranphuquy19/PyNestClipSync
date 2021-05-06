@@ -24,6 +24,7 @@ def msgToClient(data):
         pyperclip.copy(data['value'])
         print(data['value'])
 
+
 async def listen_clipboard():
     clipboard_content = ''
     while True:
