@@ -5,7 +5,6 @@ import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessa
 @WebSocketGateway()
 export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     private readonly logger = new Logger(AppGateway.name);
-
     @WebSocketServer() server: Server;
 
     afterInit(server: any) {
@@ -23,16 +22,19 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
 
     @SubscribeMessage('msgToServer')
     handleMessage(client: any, data: any): void {
+        this.logger.log('msgToServer', data);
         this.server.emit('msgToClient', data);
     }
 
     @SubscribeMessage('join_room')
     joinRoom(client: any, payload: any): void {
+        this.logger.log('join_room', payload);
         client.join(payload);
     }
 
     @SubscribeMessage('leave_room')
     leaveRoom(client: any, payload: any): void {
+        this.logger.log('leave_room', payload);
         client.leave(payload);
     }
 }
