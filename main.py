@@ -3,7 +3,7 @@ import socketio
 import pyperclip
 
 sio = socketio.AsyncClient(reconnection=True, reconnection_attempts=20, reconnection_delay=1)
-rooms = open('rooms.txt', 'r').read().rstrip().split('\n')
+rooms = open('rooms.txt', 'r').read().strip().split('\n')
 
 
 @sio.event
