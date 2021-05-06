@@ -9,9 +9,8 @@ rooms = open('rooms.txt', 'r').read().strip().split('\n')
 @sio.event
 async def connect():
     print('connected to server')
-    for room in rooms:
-        await sio.emit('join_room', room)
-        print("You are in room: {0}".format(room))
+    await sio.emit('join_room', rooms)
+    print("You are in rooms: {0}".format(rooms))
 
 
 @sio.event
@@ -20,9 +19,10 @@ async def disconnect():
 
 
 @sio.event
-def msgToClient(msg):
-    print(msg)
-
+def msgToClient(data):
+    if data['from'] != sio.sid:
+        pyperclip.copy(data['value'])
+        print(data['value'])
 
 async def listen_clipboard():
     clipboard_content = ''
@@ -31,7 +31,7 @@ async def listen_clipboard():
         if text != clipboard_content:
             clipboard_content = text
             print("new text from clipboard:", text)
-            await sio.emit('msgToServer', {'rooms': rooms, 'payload': {'type': 'text', 'value': text}})
+            await sio.emit('msgToServer', {'rooms': rooms, 'from': sio.sid, 'payload': {'type': 'text', 'value': text}})
         await asyncio.sleep(1)
 
 

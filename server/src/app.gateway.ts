@@ -13,7 +13,6 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
 
     handleConnection(client: any, ...args: any[]) {
         this.logger.log('Client connected: ', `${client.id}`);
-        this.server.emit('msgToClient', client.id + ' connected');
     }
 
     handleDisconnect(client: any) {
@@ -24,7 +23,9 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
     handleMessage(client: any, data: any): void {
         this.logger.log('msgToServer', data);
         console.log(data)
-        this.server.emit('msgToClient', data);
+        data.rooms.forEach(room => {
+            this.server.to(room).emit('msgToClient', {type: 'text', value: data.payload.value, from: client.id})
+        })
     }
 
     @SubscribeMessage('join_room')
