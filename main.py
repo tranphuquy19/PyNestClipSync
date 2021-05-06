@@ -4,12 +4,16 @@ import signal
 import sys
 
 sio = socketio.AsyncClient(reconnection=True, reconnection_attempts=20, reconnection_delay=1)
+rooms = open('rooms.txt', 'r').readlines()
 
 
 @sio.event
 async def connect():
     print('connected to server')
-    await sio.emit('msgToServer', 'test message')
+    for room in rooms:
+        _room = room.rstrip()
+        await sio.emit('join_room', _room)
+        print("You are in room: {0}".format(_room))
 
 
 @sio.event

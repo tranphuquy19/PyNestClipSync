@@ -28,7 +28,7 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
 
     @SubscribeMessage('join_room')
     joinRoom(client: any, payload: any): void {
-        this.logger.log('join_room', payload);
+        this.logger.log(`join_room_${client.id}`, payload);
         client.join(payload);
     }
 
