@@ -21,7 +21,6 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
 
     @SubscribeMessage('msgToServer')
     handleMessage(client: any, data: any): void {
-        this.logger.log('msgToServer', data);
         console.log(data)
         data.rooms.forEach(room => {
             this.server.to(room).emit('msgToClient', {type: 'text', value: data.payload.value, from: client.id})
