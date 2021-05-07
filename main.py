@@ -10,6 +10,7 @@ rooms = open('rooms.txt', 'r').read().strip().split('\n')
 async def connect():
     print('connected to server')
     await sio.emit('join_room', rooms)
+    print("Your ID: {0}".format(sio.sid))
     print("You are in rooms: {0}".format(rooms))
 
 
@@ -22,7 +23,7 @@ async def disconnect():
 def msgToClient(data):
     if data['from'] != sio.sid:
         pyperclip.copy(data['value'])
-        print(data['value'])
+        print(data['value'], 'from', data['from'])
 
 
 async def listen_clipboard():
