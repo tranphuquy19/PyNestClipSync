@@ -1,9 +1,17 @@
-import { Logger } from "@nestjs/common";
-import { Server } from "socket.io";
-import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { Logger } from '@nestjs/common';
+import { Server } from 'socket.io';
+import {
+    OnGatewayConnection,
+    OnGatewayDisconnect,
+    OnGatewayInit,
+    SubscribeMessage,
+    WebSocketGateway,
+    WebSocketServer,
+} from '@nestjs/websockets';
 
 @WebSocketGateway()
-export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+export class AppGateway
+    implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     private readonly logger = new Logger(AppGateway.name);
     @WebSocketServer() server: Server;
 
@@ -21,10 +29,14 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
 
     @SubscribeMessage('msgToServer')
     handleMessage(client: any, data: any): void {
-        console.log(data)
-        data.rooms.forEach(room => {
-            this.server.to(room).emit('msgToClient', {type: 'text', value: data.payload.value, from: client.id})
-        })
+        console.log(data);
+        data.rooms.forEach((room) => {
+            client.to(room).emit('msgToClient', {
+                type: 'text',
+                value: data.payload.value,
+                from: client.id,
+            });
+        });
     }
 
     @SubscribeMessage('join_room')
