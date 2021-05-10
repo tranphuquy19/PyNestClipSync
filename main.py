@@ -5,7 +5,6 @@ import pyperclip
 sio = socketio.AsyncClient(reconnection=True, reconnection_attempts=20, reconnection_delay=1)
 rooms = open('rooms.txt', 'r').read().strip().split('\n')
 
-set_text = ''
 
 @sio.event
 async def connect():
@@ -24,7 +23,6 @@ async def disconnect():
 def msgToClient(data):
     if data['from'] != sio.sid and data['value'] != pyperclip.paste():
         pyperclip.copy(data['value'])
-        set_text = data['value']
         print(data['value'], 'from', data['from'])
 
 
@@ -32,7 +30,7 @@ async def listen_clipboard():
     clipboard_content = ''
     while True:
         text = pyperclip.paste()
-        if text != clipboard_content and text != set_text:
+        if text != clipboard_content:
             clipboard_content = text
             print("new text from clipboard:", text)
             await sio.emit('msgToServer', {'rooms': rooms, 'from': sio.sid, 'payload': {'type': 'text', 'value': text}})
