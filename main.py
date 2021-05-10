@@ -22,7 +22,7 @@ async def disconnect():
 
 @sio.event
 def msgToClient(data):
-    if data['from'] != sio.sid:
+    if data['from'] != sio.sid and data['value'] != pyperclip.paste():
         pyperclip.copy(data['value'])
         set_text = data['value']
         print(data['value'], 'from', data['from'])
