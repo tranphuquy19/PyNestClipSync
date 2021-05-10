@@ -32,7 +32,6 @@ export class AppGateway
         client: any,
         { rooms, from, payload: { type, value } }: any,
     ): void {
-        console.log(value);
         rooms.forEach((room) => {
             client.to(room).emit('msgToClient', {
                 type,
