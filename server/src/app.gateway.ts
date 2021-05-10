@@ -28,13 +28,16 @@ export class AppGateway
     }
 
     @SubscribeMessage('msgToServer')
-    handleMessage(client: any, data: any): void {
-        console.log(data);
-        data.rooms.forEach((room) => {
+    handleMessage(
+        client: any,
+        { rooms, from, payload: { type, value } }: any,
+    ): void {
+        console.log(value);
+        rooms.forEach((room) => {
             client.to(room).emit('msgToClient', {
-                type: 'text',
-                value: data.payload.value,
-                from: client.id,
+                type,
+                from,
+                value,
             });
         });
     }
