@@ -9,7 +9,7 @@ Agents can use the Clipboard Synchronization feature to transfer text in both di
 1. Clone this project
 
 ```bash
-git clone https://github.com:tranphuquy19/PyNestClipSync.git
+git clone https://github.com/tranphuquy19/PyNestClipSync.git
 ```
 
 2. Install dependencies
