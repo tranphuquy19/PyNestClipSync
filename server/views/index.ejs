@@ -1,12 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="socket.io/socket.io.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <title>Python NestJS Clipboard Synchronization</title>
+    <style>
+        p:last-child {
+            height: 10%;
+        }
+
+        .tb {
+            max-height: 400px;
+            min-height: 400px;
+            overflow-y: scroll;
+        }
+    </style>
 </head>
+
 <body>
-    <%= name %>
+    <div id="app" class="container mt-3">
+        <h2><%= name %> | Installation guide: <a href="https://github.com/tranphuquy19/PyNestClipSync" target="_blank">https://github.com/tranphuquy19/PyNestClipSync</a></h2>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Messages from public room</h3>
+                    </div>
+                    <div class="col-md-12 tb" id="messBox" style="border: 1px solid black; border-radius: 5px">
+                        <pre v-for="(m, index) in mess" :key="index" class="m-0">{{m.value}}<hr></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
+<script>
+    var url_origin = window.location.origin;
+    var socket = io(url_origin);
+
+    socket.emit('join_room', ['public'])
+
+    socket.on('msgToClient', payload => {
+        console.log(payload);
+        const { from, value } = payload;
+        vueInstance.mess = [{from, value}].concat(vueInstance.mess)
+    })
+
+    Vue.config.devtools = true;
+    let vueInstance = new Vue({
+
+        el: '#app',
+        data: {
+            mess: [],
+            // payload: {}
+        },
+        methods: {
+
+        },
+        watch: {
+            mess() {
+                // let container = this.$el.querySelector("#messBox");
+                // container.scrollIntoView(false);
+                // container.scrollTop = container.scrollHeight;
+            }
+        }
+    });
+</script>
+
 </html>
