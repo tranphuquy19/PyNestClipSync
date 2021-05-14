@@ -1,5 +1,7 @@
 # Python NestJS Clipboard Synchronization
 
+Agents can use the Clipboard Synchronization feature to transfer text in both directions between devices using Socket.io written in TypeScript and Python3
+
 ## Installation guide
 
 * This project requires python >= 3.6
