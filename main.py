@@ -38,7 +38,7 @@ async def listen_clipboard():
 
 
 async def start_app():
-    await sio.connect('https://doraneko.tk')
+    await sio.connect('https://clipsync.doramatching.tk')
     await sio.wait()
 
 
