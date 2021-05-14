@@ -4,7 +4,7 @@ Agents can use the Clipboard Synchronization feature to transfer text in both di
 
 ## Installation guide
 
-* This project requires python >= 3.6
+* This project requires python >= 3.6 (client side), and NodeJS 12 (server side)
 
 1. Clone this project
 
