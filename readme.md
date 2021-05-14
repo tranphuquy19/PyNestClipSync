@@ -17,7 +17,7 @@ cd PyNestClipSync
 pip3 install python-engineio==3.14.2 python-socketio[client]==4.6.0 pyperclip aiohttp python-socketio[asyncio_client]
 ```
 
-**Note**: If you are using linux OS please install `xclip` moving on to the next step. By:
+**Note**: If you are using linux OS please install `xclip` before moving on to the next step. By:
 
 ```bash
 sudo apt install xclip -y # ubuntu, debian
