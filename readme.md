@@ -34,7 +34,9 @@ my-room1
 my-room2
 ```
 
-**Note**: All room messages named `public` will be displayed at [https://clipsync.doramatching.tk](https://clipsync.doramatching.tk)
+**Note**: All messages of room `public` will be displayed at [https://clipsync.doramatching.tk](https://clipsync.doramatching.tk)
+
+**Warning**: Be careful when copying sensitive data like `password`, `credentials`, etc. when you are in room `public`. Recommend complex room naming, example: `BYUuBui87jj`
 
 4. Start the app
 
